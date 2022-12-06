@@ -1,0 +1,26 @@
+{
+  "name": "crud-operation-with-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.mjs",
+    "dev": "node --watch index.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hamzaali565/CRUD-Operation-With-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hamzaali565/CRUD-Operation-With-Server/issues"
+  },
+  "homepage": "https://github.com/Hamzaali565/CRUD-Operation-With-Server#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "node-modules": "^1.0.1"
+  }
+}
