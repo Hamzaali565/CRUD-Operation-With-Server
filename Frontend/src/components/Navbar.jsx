@@ -60,12 +60,22 @@ const Navbar = () => {
   const [ray1, setRay1] = useState([]);
   const [open, setOpen] = useState(true);
   const [del, setDel] = useState("");
-  // const [ray2, setRay2] = useState([]);
+  const [isEditing, setIsEditing] = useState("");
+  const [chapli, setchapli] = useState(false);
+  const [isEditingText, setIsEditingText] = useState("")
+  const [isEditingPrice, setIsEditingPrice] = useState("")
+  const [isEditingDescription, setIsEditingDescription] = useState("")
+  const [ray2, setRay2] = useState([]);
 
   let Objs = {
     name: name,
     price: price,
     description: description,
+  }
+  let Objt = {
+    name: isEditingText,
+    price: isEditingPrice,
+    description: isEditingDescription,
   }
 
   let baseUrl = "";
@@ -101,6 +111,25 @@ const Navbar = () => {
       .catch(err => {
         console.log("err", err);
       })
+  }
+  const updation = (e) => {
+    e.preventDefault();
+    setchapli(false)
+    axios.put(`${baseUrl}/product/${isEditing}`, Objt)
+      .then(response => {
+        console.log("allDAta", response.data.data);
+        // setRay1(response.data.data)
+        // setIsEditingText("")
+        // setIsEditingPrice("")
+        // setIsEditingDescription("")
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
+
+  }
+  const edit = () => {
+    setchapli(true)
   }
   // console.log("post", Objs);
   // let A = []
@@ -220,8 +249,6 @@ const Navbar = () => {
               justifyContent: "center",
               mt: "10px"
             }}>
-
-
               <Box flex={1} height={280} bgcolor={"background.default"} color={"text.primary"}
                 p={3} border="1px solid black" borderRadius={5}>
                 <Typography variant='h6' color='gray' textAlign='center'>Create Post</Typography>
@@ -273,26 +300,6 @@ const Navbar = () => {
               </Box>
             </Box>
           </Box>
-          {/*  */}
-          <Menu
-            id="demo-positioned-menu"
-            aria-labelledby="demo-positioned-button"
-            open={open}
-            onClose={(e) => { setOpen(false) }}
-            anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-          >
-            <MenuItem onClick={(e) => setOpen(false)}>Profile</MenuItem>
-            <MenuItem onClick={(e) => setOpen(false)}>My account</MenuItem>
-            <MenuItem onClick={(e) => setOpen(false)}>Logout</MenuItem>
-          </Menu>
-
 
           <Box flex={1} mt="20px">
             {
@@ -307,15 +314,53 @@ const Navbar = () => {
                     </Avatar>}
                     action={<IconButton aria-label="settings">
                       {/* <MoreVert /> */}
-                      <Select sx={{ mr: "10px" }} onFocus={() => { setDel(eachItem?.id) }}>
-                        <MenuItem>Edit</MenuItem>
-                        <MenuItem
-                          onClick={() => deletePost()}
-                        >Delete
-                        </MenuItem>
-                      </Select>
+                      {(chapli === false) ?
+                        <Select sx={{ mr: "10px" }} onFocus={() => { setDel(eachItem?.id) }}>
+                          <MenuItem
+
+                            onClick={() => {
+                              setIsEditing(eachItem.id)
+                              setIsEditingText(eachItem.name)
+                              setIsEditingDescription(eachItem.description)
+                              setIsEditingPrice(eachItem.price)
+                              edit()
+                            }
+                            }
+                          >Edit</MenuItem>
+                          <MenuItem
+                            onClick={() => deletePost()}
+                          >Delete
+                          </MenuItem>
+                        </Select>
+                        :
+                        null
+                      }
                     </IconButton>}
-                    title={eachItem?.name}
+                    title=
+                    {
+                      (eachItem.id === isEditing && chapli === true) ?
+                        <Box
+                          onSubmit={updation}
+                          component="form"
+                          // sx={{
+                          //   '& > :not(style)': { m: 1, width: '25ch' },
+                          // }}
+                          noValidate
+                          autoComplete="off"
+                        >
+                          <TextField
+                            id="standard-basic"
+                            label="update your name"
+                            variant="standard"
+                            value={isEditingText}
+                            onChange={(e) => setIsEditingText(e.target.value)}
+                            placeholder="input your name"
+                          />
+                          <Button type='submit' sx={{ mt: "10px" }}>Update</Button>
+
+                        </Box>
+
+                        : (chapli === false) ? eachItem?.name : null}
                     subheader="September 14, 2016" />
                   <Box
                     height={300}
@@ -334,9 +379,58 @@ const Navbar = () => {
                   </Box>
                   <CardContent>
                     <Typography variant="body2" color="text.secondary" mb={0}>
-                      {eachItem?.description}
+                    <b>Description</b>: {
+                        (eachItem.id === isEditing && chapli === true) ?
+                          <Box
+                            onSubmit={updation}
+                            component="form"
+                            // sx={{
+                            //   '& > :not(style)': { m: 1, width: '25ch' },
+                            // }}
+                            noValidate
+                            autoComplete="off"
+                          >
+                            <TextField
+                              id="standard-basic"
+                              label="update your description"
+                              variant="standard"
+                              value={isEditingDescription}
+                              onChange={(e) => setIsEditingDescription(e.target.value)}
+                              placeholder="Input Your Description"
+                            />
+                            <Button type='submit' sx={{ mt: "10px" }}>Update</Button>
+
+                          </Box>
+                          :
+                          (chapli === false) ? eachItem?.description : null
+                      }
+
                       <Typography variant='body2' color="text.secondary" mt={2}>
-                        Price:{eachItem?.price}
+                        <b>Price</b>: {
+                          (eachItem.id === isEditing && chapli === true) ?
+                            <Box
+                              onSubmit={updation}
+                              component="form"
+                              // sx={{
+                              //   '& > :not(style)': { m: 1, width: '25ch' },
+                              // }}
+                              noValidate
+                              autoComplete="off"
+                            >
+                              <TextField
+                                id="standard-basic"
+                                label="update your price"
+                                variant="standard"
+                                value={isEditingPrice}
+                                onChange={(e) => setIsEditingPrice(e.target.value)}
+                                placeholder="Input Your Price"
+                              />
+                              <Button type='submit' sx={{ mt: "10px" }}>Update</Button>
+
+                            </Box>
+                            :
+                            (chapli === false) ? eachItem?.price : null
+                        }
                       </Typography>
                     </Typography>
 

@@ -131,7 +131,8 @@ app.put('/product/:id', (req, res) => {
             products[i].description = body.description;
 
             res.send({
-                message: "product modified successfully"
+                message: "product modified successfully",
+                data: products
             });
             isFound = true
             break;
