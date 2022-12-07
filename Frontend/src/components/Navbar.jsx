@@ -54,30 +54,33 @@ const Navbar = () => {
   //   description: "",
   // })
 
-  const [name, setName] = useState("")
-  const [price, setPrice] = useState("")
-  const [description, setDescription] = useState("")
-  
-let Objs ={
-  name: name,
-  price: price,
-  description: description,
-}
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState("");
+  const [description, setDescription] = useState("");
+  const [ray, setRay] = useState(null);
+
+  let Objs = {
+    name: name,
+    price: price,
+    description: description,
+  }
 
   let baseUrl = "";
   if (window.location.href.split(":")[0] === "http") {
     baseUrl = "http://localhost:5001"
   }
 
-  const postcall = () => {
+  const handlerChange = (e) => {
+    e.preventDefault();
     axios.post(`${baseUrl}/product`, Objs)
       .then(response => {
         console.log(response.data);
+        setRay(response.data)
       })
       .catch(err => {
         console.log("err", err);
       })
-      console.log("post", Objs);
+    console.log("post", Objs);
   }
 
   return (
@@ -199,7 +202,7 @@ let Objs ={
                     src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t1.6435-9/188384323_1447601038927019_7887706600818859341_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGCL_hYTwG3k08kQD1LvB8Nsc5T_WLrH_GxzlP9Yusf8UL9sMeXCGVl0UPyrwu9aI_Jxl1QzZohUXqIXpF8s3en&_nc_ohc=7FRlBip4joUAX-tigpc&_nc_ht=scontent.fkhi22-1.fna&oh=00_AfAwof37GJPcifAUMMjWyR4bvCvOynHtJ3UWO1Z1k0j0Pw&oe=63B01325" />
                   <Typography fontWeight={500} variant="span">Muhammad Hamza Ali</Typography>
                 </UserBox1>
-                <FormControl sx={{ width: "100%" }}>
+                <form onSubmit={handlerChange} sx={{ width: "100%" }}>
                   <TextField
                     sx={{ width: "100%" }}
                     id="standard-multiline-static"
@@ -224,62 +227,72 @@ let Objs ={
                     rows={1}
                     placeholder="Description For Product"
                     variant="standard" />
-                </FormControl>
-                <Stack direction='row' gap={1} mt={2} mb={3}>
-                  <EmojiEmotions color='primary' />
-                  <Image color='secondary' />
-                  <VideoCameraBack color='success' />
-                  <PersonAdd color='error' />
-                </Stack>
-                <ButtonGroup fullWidth
-                  variant='contained'
-                  aria-label='outlined primary button group'>
-                  <Button
-                    onClick={() => {
-                      postcall()
-                    }}
-                  >Post</Button>
-                  <Button>Cancel</Button>
-                </ButtonGroup>
-              </Box>
 
+                  <Stack direction='row' gap={1} mt={2} mb={3}>
+                    <EmojiEmotions color='primary' />
+                    <Image color='secondary' />
+                    <VideoCameraBack color='success' />
+                    <PersonAdd color='error' />
+                  </Stack>
+                  <ButtonGroup fullWidth
+                    variant='contained'
+                    aria-label='outlined primary button group'>
+                    <Button
+                      type='submit'>Post</Button>
+                    <Button>Cancel</Button>
+                  </ButtonGroup>
+                </form>
+              </Box>
             </Box>
           </Box>
-          <Box flex={1} mt="20px">
-            <Card sx={{ height: { xs: "400", sm: "400", md: "500", lg: "500" } }}>
-              <CardHeader
-                avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                  R
-                </Avatar>}
-                action={<IconButton aria-label="settings">
-                  <MoreVert />
-                </IconButton>}
-                title="Muhammad Hamza Ali"
-                subheader="September 14, 2016" />
-              <CardMedia
-                component="img"
-                // height="300"
-                sx={{ height: { xs: "200", sm: "300", md: "300", lg: "300" } }}
-                image="https://mui.com/static/images/cards/paella.jpg"
-                alt="Paella dish" />
-              <CardContent>
-                <Typography variant="body2" color="text.secondary" mb={0}>
-                  This impressive paella is a perfect party dish and a fun meal to cook
-                  together with your guests.
-                </Typography>
-              </CardContent>
-              <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                  {/* <CheckBox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:"red"}}/>}/> */}
-                  <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: "red" }} />} />
-                </IconButton>
+          {/*  */}
 
-                <IconButton aria-label="share">
-                  <Share />
-                </IconButton>
-              </CardActions>
-            </Card>
-          </Box>
+
+
+          {/* {(ray === null) ? null : */}
+            <Box flex={1} mt="20px">
+              <Card sx={{ height: { xs: "400", sm: "400", md: "500", lg: "500" } }}>
+                <CardHeader
+                  avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                    R
+                  </Avatar>}
+                  action={<IconButton aria-label="settings">
+                    <MoreVert />
+                  </IconButton>}
+                  title={ray?.name}
+                  subheader="September 14, 2016" />
+                <CardMedia
+                  component="img"
+                  // height="300"
+                  sx={{ height: { xs: "200", sm: "300", md: "300", lg: "300" } }}
+                  image="https://mui.com/static/images/cards/paella.jpg"
+                  alt="Paella dish" />
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary" mb={0}>
+                    {ray?.description}
+                    <Typography variant='body2' color="text.secondary" mt={2}>
+                      Price:{ray?.price}
+                    </Typography>
+                  </Typography>
+
+                </CardContent>
+
+                <CardActions disableSpacing sx={{ mt: "0px", paddingTop: "0px" }}>
+                  <IconButton aria-label="add to favorites">
+                    {/* <CheckBox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:"red"}}/>}/> */}
+                    <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: "red" }} />} />
+                  </IconButton>
+
+                  <IconButton aria-label="share">
+                    <Share />
+                  </IconButton>
+                </CardActions>
+              </Card>
+            </Box>
+            
+          {/* } */}
+
+          {/*  */}
         </Box>
 
         {/* rightbar */}
@@ -403,7 +416,7 @@ let Objs ={
         </Box>
 
       </Stack>
-    </div>
+    </div >
   )
 }
 export default Navbar
