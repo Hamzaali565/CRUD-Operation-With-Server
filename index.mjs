@@ -8,10 +8,10 @@ const port = process.env.PORT || 5001;
 app.use(cors());
 app.use(express.json());
 
-let products = [{
+let products = [
 
 
-}]; // TODO: connect with mongodb instead
+]; // TODO: connect with mongodb instead
 
 
 app.post('/product', (req, res) => {
