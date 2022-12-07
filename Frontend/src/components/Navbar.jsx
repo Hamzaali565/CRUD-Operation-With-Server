@@ -57,6 +57,7 @@ const Navbar = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
+  const [ray1, setRay1] = useState(null);
   const [ray, setRay] = useState([]);
 
   let Objs = {
@@ -75,8 +76,8 @@ const Navbar = () => {
     axios.post(`${baseUrl}/product`, Objs)
       .then(response => {
         console.log(response.data);
-        setRay(response.data)
-        console.log("ray", ray)
+        setRay1(response.data)
+        console.log("ray1", ray1)
       })
       .catch(err => {
         console.log("err", err);
