@@ -57,7 +57,7 @@ const Navbar = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [ray, setRay] = useState(null);
+  const [ray, setRay] = useState([]);
 
   let Objs = {
     name: name,
@@ -249,50 +249,64 @@ const Navbar = () => {
 
 
 
-          {/* {(ray === null) ? null : */}
-            <Box flex={1} mt="20px">
-              <Card sx={{ height: { xs: "400", sm: "400", md: "500", lg: "500" } }}>
-                <CardHeader
-                  avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-                    R
-                  </Avatar>}
-                  action={<IconButton aria-label="settings">
-                    <MoreVert />
-                  </IconButton>}
-                  title={ray?.name}
-                  subheader="September 14, 2016" />
-                <CardMedia
-                  component="img"
-                  // height="300"
-                  sx={{ height: { xs: "200", sm: "300", md: "300", lg: "300" } }}
-                  image="https://mui.com/static/images/cards/paella.jpg"
-                  alt="Paella dish" />
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary" mb={0}>
-                    {ray?.description}
-                    <Typography variant='body2' color="text.secondary" mt={2}>
-                      Price:{ray?.price}
+          <Box flex={1} mt="20px">
+            {
+              ray.map((eachItem, i) => (
+                <Card  key={i} sx={{ height: { xs: "400", sm: "400", md: "500", lg: "500" },
+                marginTop:"10px" }}>
+                  <CardHeader
+                    avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+                      R
+                    </Avatar>}
+                    action={<IconButton aria-label="settings">
+                      <MoreVert />
+                    </IconButton>}
+                    title={eachItem?.name}
+                    subheader="September 14, 2016" />
+                  {/* component="img"
+                    // height="300"
+                    sx={{ height: { xs: "200", sm: "300", md: "300", lg: "300" } }}
+                    image="https://mui.com/static/images/cards/paella.jpg"
+                    alt="Paella dish" */}
+                  <Box
+                    height={300}
+
+                    sx={{
+                      height: { xs: "200", sm: "300", md: "300", lg: "300" },
+                      display: "flex",
+                      justifyContent:"center"
+                    }}
+                  >
+                    <img
+                      src="https://mui.com/static/images/cards/paella.jpg"
+                      alt="Paella dish"
+                      width="95%"
+                    />
+                  </Box>
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary" mb={0}>
+                      {eachItem?.description}
+                      <Typography variant='body2' color="text.secondary" mt={2}>
+                        Price:{eachItem?.price}
+                      </Typography>
                     </Typography>
-                  </Typography>
 
-                </CardContent>
+                  </CardContent>
 
-                <CardActions disableSpacing sx={{ mt: "0px", paddingTop: "0px" }}>
-                  <IconButton aria-label="add to favorites">
-                    {/* <CheckBox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:"red"}}/>}/> */}
-                    <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: "red" }} />} />
-                  </IconButton>
+                  <CardActions disableSpacing sx={{ mt: "0px", paddingTop: "0px" }}>
+                    <IconButton aria-label="add to favorites">
+                      {/* <CheckBox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{color:"red"}}/>}/> */}
+                      <Checkbox icon={<FavoriteBorder />} checkedIcon={<Favorite sx={{ color: "red" }} />} />
+                    </IconButton>
 
-                  <IconButton aria-label="share">
-                    <Share />
-                  </IconButton>
-                </CardActions>
-              </Card>
-            </Box>
-            
-          {/* } */}
-
-          {/*  */}
+                    <IconButton aria-label="share">
+                      <Share />
+                    </IconButton>
+                  </CardActions>
+                </Card>
+              ))}
+          </Box>
+          {/* // */}
         </Box>
 
         {/* rightbar */}
