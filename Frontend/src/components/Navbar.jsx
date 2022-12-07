@@ -76,6 +76,7 @@ const Navbar = () => {
       .then(response => {
         console.log(response.data);
         setRay(response.data)
+        console.log("ray", ray)
       })
       .catch(err => {
         console.log("err", err);
