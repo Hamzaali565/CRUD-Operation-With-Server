@@ -57,8 +57,9 @@ const Navbar = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
-  const [ray1, setRay1] = useState([]);
+  const [ray1, setRay1] = useState();
   const [ray, setRay] = useState([]);
+  const [ray2, setRay2] = useState([]);
 
   let Objs = {
     name: name,
@@ -76,13 +77,16 @@ const Navbar = () => {
     axios.post(`${baseUrl}/product`, Objs)
       .then(response => {
         console.log(response.data);
-        setRay1([response.data])
+        setRay1(response.data)
+        let A = []
+        A.push(ray1)
+        setRay2(A)
+        console.log("Arr", A)
       })
       .catch(err => {
         console.log("err", err);
       })
     console.log("post", Objs);
-        console.log("ray1", ray1)
   }
 
   return (
@@ -254,8 +258,10 @@ const Navbar = () => {
           <Box flex={1} mt="20px">
             {
               ray.map((eachItem, i) => (
-                <Card  key={i} sx={{ height: { xs: "400", sm: "400", md: "500", lg: "500" },
-                marginTop:"10px" }}>
+                <Card key={i} sx={{
+                  height: { xs: "400", sm: "400", md: "500", lg: "500" },
+                  marginTop: "10px"
+                }}>
                   <CardHeader
                     avatar={<Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
                       R
@@ -276,7 +282,7 @@ const Navbar = () => {
                     sx={{
                       height: { xs: "200", sm: "300", md: "300", lg: "300" },
                       display: "flex",
-                      justifyContent:"center"
+                      justifyContent: "center"
                     }}
                   >
                     <img
