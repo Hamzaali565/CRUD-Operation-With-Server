@@ -4,7 +4,7 @@ import { Box } from '@mui/system'
 import axios from 'axios';
 import {
   AppBar, Avatar, AvatarGroup, Badge, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, Divider, FormControl, Icon, IconButton, ImageList, ImageListItem, Input,
-  InputBase, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Stack, styled, Switch, TextField, Toolbar, Typography
+  InputBase, InputLabel, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Menu, MenuItem, Select, Stack, styled, Switch, TextField, Toolbar, Typography
 } from '@mui/material'
 import { red } from '@mui/material/colors'
 import SwitchBase from '@mui/material/internal/SwitchBase'
@@ -58,7 +58,8 @@ const Navbar = () => {
   const [price, setPrice] = useState("");
   const [description, setDescription] = useState("");
   const [ray1, setRay1] = useState([]);
-  // const [ray, setRay] = useState([]);
+  const [open, setOpen] = useState(true);
+  const [del, setDel] = useState("");
   // const [ray2, setRay2] = useState([]);
 
   let Objs = {
@@ -71,7 +72,15 @@ const Navbar = () => {
   if (window.location.href.split(":")[0] === "http") {
     baseUrl = "http://localhost:5001"
   }
-
+  const deletePost = () => {
+    axios.delete(`${baseUrl}/product/${del}`)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
+  }
   const handlerChange = (e) => {
     e.preventDefault();
     axios.post(`${baseUrl}/product`, Objs)
@@ -82,15 +91,26 @@ const Navbar = () => {
       .catch(err => {
         console.log("err", err);
       })
-    // console.log("post", Objs);
-    // let A = []
-    // A.push(ray1)
-    // setRay2(A)
-    // console.log("Arr", A)
   }
-//   const checkLog = () => {
-// console.log("ray1", ray1);
-//   }
+  const getAllPost = () => {
+    axios.get(`${baseUrl}/products`)
+      .then(response => {
+        console.log("allDAta", response.data.data);
+        setRay1(response.data.data)
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
+  }
+  // console.log("post", Objs);
+  // let A = []
+  // A.push(ray1)
+  // setRay2(A)
+  // console.log("Arr", A)
+  //   const checkLog = () => {
+  // console.log("ray1", ray1);
+  //   }
+
   return (
     <div>
       <AppBar position="sticky" color='error'>
@@ -247,14 +267,31 @@ const Navbar = () => {
                     aria-label='outlined primary button group'>
                     <Button
                       type='submit'>Post</Button>
-                    <Button>Cancel</Button>
+                    <Button onClick={() => getAllPost()}>Get All Post</Button>
                   </ButtonGroup>
                 </form>
               </Box>
             </Box>
           </Box>
           {/*  */}
-
+          <Menu
+            id="demo-positioned-menu"
+            aria-labelledby="demo-positioned-button"
+            open={open}
+            onClose={(e) => { setOpen(false) }}
+            anchorOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+            transformOrigin={{
+              vertical: 'top',
+              horizontal: 'right',
+            }}
+          >
+            <MenuItem onClick={(e) => setOpen(false)}>Profile</MenuItem>
+            <MenuItem onClick={(e) => setOpen(false)}>My account</MenuItem>
+            <MenuItem onClick={(e) => setOpen(false)}>Logout</MenuItem>
+          </Menu>
 
 
           <Box flex={1} mt="20px">
@@ -269,15 +306,17 @@ const Navbar = () => {
                       R
                     </Avatar>}
                     action={<IconButton aria-label="settings">
-                      <MoreVert />
+                      {/* <MoreVert /> */}
+                      <Select sx={{ mr: "10px" }} onFocus={() => { setDel(eachItem?.id) }}>
+                        <MenuItem>Edit</MenuItem>
+                        <MenuItem
+                          onClick={() => deletePost()}
+                        >Delete
+                        </MenuItem>
+                      </Select>
                     </IconButton>}
                     title={eachItem?.name}
                     subheader="September 14, 2016" />
-                  {/* component="img"
-                    // height="300"
-                    sx={{ height: { xs: "200", sm: "300", md: "300", lg: "300" } }}
-                    image="https://mui.com/static/images/cards/paella.jpg"
-                    alt="Paella dish" */}
                   <Box
                     height={300}
 
@@ -443,4 +482,5 @@ const Navbar = () => {
     </div >
   )
 }
-export default Navbar
+
+export default Navbar;
