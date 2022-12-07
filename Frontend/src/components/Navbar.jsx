@@ -3,7 +3,7 @@ import { EmojiEmotions, ExpandMore, Group, Home, Image, Share, Mail, Margin, Mes
 import { Box } from '@mui/system'
 import axios from 'axios';
 import {
-  AppBar, Avatar, AvatarGroup, Badge, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, Divider, Icon, IconButton, ImageList, ImageListItem, Input,
+  AppBar, Avatar, AvatarGroup, Badge, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, Divider, FormControl, Icon, IconButton, ImageList, ImageListItem, Input,
   InputBase, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Stack, styled, Switch, TextField, Toolbar, Typography
 } from '@mui/material'
 import { red } from '@mui/material/colors'
@@ -48,20 +48,36 @@ const UserBox1 = styled(Box)({
 })
 
 const Navbar = () => {
-  const [weather, setWeather] = useState(null)
-  const [cityName, setCityName] = useState("")
+  // const [post, setPost] = useState({
+  //   name: "",
+  //   price: "",
+  //   description: "",
+  // })
+
+  const [name, setName] = useState("")
+  const [price, setPrice] = useState("")
+  const [description, setDescription] = useState("")
+  
+let Objs ={
+  name: name,
+  price: price,
+  description: description,
+}
+
   let baseUrl = "";
-   if(window.location.href.split(":")[0] === "http"){
-     baseUrl = "http://localhost:5001" }
+  if (window.location.href.split(":")[0] === "http") {
+    baseUrl = "http://localhost:5001"
+  }
 
   const postcall = () => {
-    axios.post(`${baseUrl}/product`)
-    .then(response =>{
-      console.log(response.data);
-    })
-    .catch(err => {
-      console.log("err", err);
-    })
+    axios.post(`${baseUrl}/product`, Objs)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(err => {
+        console.log("err", err);
+      })
+      console.log("post", Objs);
   }
 
   return (
@@ -183,14 +199,32 @@ const Navbar = () => {
                     src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t1.6435-9/188384323_1447601038927019_7887706600818859341_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGCL_hYTwG3k08kQD1LvB8Nsc5T_WLrH_GxzlP9Yusf8UL9sMeXCGVl0UPyrwu9aI_Jxl1QzZohUXqIXpF8s3en&_nc_ohc=7FRlBip4joUAX-tigpc&_nc_ht=scontent.fkhi22-1.fna&oh=00_AfAwof37GJPcifAUMMjWyR4bvCvOynHtJ3UWO1Z1k0j0Pw&oe=63B01325" />
                   <Typography fontWeight={500} variant="span">Muhammad Hamza Ali</Typography>
                 </UserBox1>
-
-                <TextField
-                  sx={{ width: "100%" }}
-                  id="standard-multiline-static"
-                  multiline
-                  rows={3}
-                  placeholder="What's in your Mind"
-                  variant="standard" />
+                <FormControl sx={{ width: "100%" }}>
+                  <TextField
+                    sx={{ width: "100%" }}
+                    id="standard-multiline-static"
+                    onChange={(e) => { setName(e.target.value) }}
+                    multiline
+                    rows={1}
+                    placeholder="Name For Product "
+                    variant="standard" />
+                  <TextField
+                    sx={{ width: "100%" }}
+                    onChange={(e) => { setPrice(e.target.value) }}
+                    id="standard-multiline-static"
+                    multiline
+                    rows={1}
+                    placeholder="Price For Product"
+                    variant="standard" />
+                  <TextField
+                    sx={{ width: "100%" }}
+                    onChange={(e) => { setDescription(e.target.value) }}
+                    id="standard-multiline-static"
+                    multiline
+                    rows={1}
+                    placeholder="Description For Product"
+                    variant="standard" />
+                </FormControl>
                 <Stack direction='row' gap={1} mt={2} mb={3}>
                   <EmojiEmotions color='primary' />
                   <Image color='secondary' />
