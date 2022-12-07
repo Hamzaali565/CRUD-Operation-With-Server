@@ -34,15 +34,16 @@ app.post('/product', (req, res) => {
     console.log(body.description)
 
     products.push({
-        // id: new Date().getTime(),
+        id: `${new Date().getTime()}`,
         name: body.name,
         price: body.price,
         description: body.description,
-        id: "1670310402018",
+        // id: "1670310402018",
     });
 
     res.send({
-        message: "product added successfully"
+        message: "product added successfully",
+        data: products
     });
 })
 
