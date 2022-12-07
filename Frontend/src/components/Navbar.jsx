@@ -77,12 +77,12 @@ const Navbar = () => {
       .then(response => {
         console.log(response.data);
         setRay1(response.data)
-        console.log("ray1", ray1)
       })
       .catch(err => {
         console.log("err", err);
       })
     console.log("post", Objs);
+        console.log("ray1", ray1)
   }
 
   return (
