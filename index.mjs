@@ -33,7 +33,7 @@ app.post('/product', (req, res) => {
     console.log(body.price)
     console.log(body.description)
 
-    products.push({
+    products.unshift({
         id: `${new Date().getTime()}`,
         name: body.name,
         price: body.price,

@@ -1,5 +1,5 @@
 import React from 'react'
-import { EmojiEmotions, ExpandMore, Group, Home, Image, Share, Mail, Margin, Message, Notifications, PersonAdd, Place, PlayArrow, PlayCircle, Storefront, VideoCameraBack, YouTube, Favorite, MoreVert, Drafts, Send, Inbox, StarBorder, ExpandLess, LiveTv, SportsEsports, CheckBox, FavoriteBorder, ToggleOffOutlined } from '@mui/icons-material'
+import { EmojiEmotions, ExpandMore, Group, Home, Image, Share, Mail, Margin, Message, Notifications, PersonAdd, Place, PlayArrow, PlayCircle, Storefront, VideoCameraBack, YouTube, Favorite, MoreVert, Drafts, Send, Inbox, StarBorder, ExpandLess, LiveTv, SportsEsports, CheckBox, FavoriteBorder, ToggleOffOutlined, Mode, ModeNight } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import axios from 'axios';
 import {
@@ -9,6 +9,8 @@ import {
 import { red } from '@mui/material/colors'
 import SwitchBase from '@mui/material/internal/SwitchBase'
 import { useState } from 'react'
+import { light } from '@mui/material/styles/createPalette';
+import e from 'cors';
 // import { response } from 'express';
 const StyledToolbar = styled(Toolbar)({
   display: "flex",
@@ -166,13 +168,14 @@ const Navbar = () => {
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }}
               src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t1.6435-9/188384323_1447601038927019_7887706600818859341_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGCL_hYTwG3k08kQD1LvB8Nsc5T_WLrH_GxzlP9Yusf8UL9sMeXCGVl0UPyrwu9aI_Jxl1QzZohUXqIXpF8s3en&_nc_ohc=7FRlBip4joUAX-tigpc&_nc_ht=scontent.fkhi22-1.fna&oh=00_AfAwof37GJPcifAUMMjWyR4bvCvOynHtJ3UWO1Z1k0j0Pw&oe=63B01325" />
-            <Typography variant='span'>Muhammad</Typography>
+        <Typography variant='span'>Muhammad</Typography>
           </UserBox>
+
         </StyledToolbar>
       </AppBar>
-      <Stack direction="row" spacing={2}>
 
         {/* Sidebar */}
+      <Stack direction="row" spacing={2}>
         <Box flex={1.5} p={2} sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
 
           <Box position={"fixed"}>
@@ -227,13 +230,23 @@ const Navbar = () => {
                 </ListItemIcon>
                 <ListItemText primary="Fun" />
               </ListItemButton>
-              <ListItemButton>
 
+              <ListItemButton>
                 <ListItemIcon>
                   <LiveTv />
                 </ListItemIcon>
                 <ListItemText primary="Streaming" />
               </ListItemButton>
+
+              {/* Switch */}
+              <ListItem disablePadding>
+                <ListItemButton component="a" href='#switch'>
+                  <ListItemIcon>
+                    <ModeNight />
+                  </ListItemIcon>
+                  <Switch />
+                </ListItemButton>
+              </ListItem>
             </List>
 
           </Box>
@@ -250,7 +263,10 @@ const Navbar = () => {
               mt: "10px"
             }}>
               <Box flex={1} height={280} bgcolor={"background.default"} color={"text.primary"}
-                p={3} border="1px solid black" borderRadius={5}>
+                p={3} border="1px solid black"
+                pb={5}
+                // sx={{ border: { xs: "none", sm: "block", md: "block" } }}
+                borderRadius={5}>
                 <Typography variant='h6' color='gray' textAlign='center'>Create Post</Typography>
                 <UserBox1>
                   <Avatar sx={{ width: 40, height: 40 }}
@@ -292,9 +308,10 @@ const Navbar = () => {
                   <ButtonGroup fullWidth
                     variant='contained'
                     aria-label='outlined primary button group'>
-                    <Button
-                      type='submit'>Post</Button>
-                    <Button onClick={() => getAllPost()}>Get All Post</Button>
+
+                    <Button type='submit'>Post</Button>
+                    <Button onClick={() => getAllPost()}
+                    >Get All Post</Button>
                   </ButtonGroup>
                 </form>
               </Box>
@@ -379,7 +396,7 @@ const Navbar = () => {
                   </Box>
                   <CardContent>
                     <Typography variant="body2" color="text.secondary" mb={0}>
-                    <b>Description</b>: {
+                      <b>Description</b>: {
                         (eachItem.id === isEditing && chapli === true) ?
                           <Box
                             onSubmit={updation}
