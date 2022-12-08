@@ -89,6 +89,7 @@ const Navbar = () => {
     axios.delete(`${baseUrl}/product/${del}`)
       .then(response => {
         console.log(response.data);
+        getAllPost()
       })
       .catch(err => {
         console.log("err", err);
@@ -121,6 +122,7 @@ const Navbar = () => {
     axios.put(`${baseUrl}/product/${isEditing}`, Objt)
       .then(response => {
         console.log("allDAta", response.data.data);
+        getAllPost();
         // setRay1(response.data.data)
         // setIsEditingText("")
         // setIsEditingPrice("")
