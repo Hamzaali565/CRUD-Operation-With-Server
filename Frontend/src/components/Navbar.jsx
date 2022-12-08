@@ -2,6 +2,7 @@ import React from 'react'
 import { EmojiEmotions, ExpandMore, Group, Home, Image, Share, Mail, Margin, Message, Notifications, PersonAdd, Place, PlayArrow, PlayCircle, Storefront, VideoCameraBack, YouTube, Favorite, MoreVert, Drafts, Send, Inbox, StarBorder, ExpandLess, LiveTv, SportsEsports, CheckBox, FavoriteBorder, ToggleOffOutlined, Mode, ModeNight } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import axios from 'axios';
+import moment from 'moment'
 import {
   AppBar, Avatar, AvatarGroup, Badge, Button, ButtonGroup, Card, CardActions, CardContent, CardHeader, CardMedia, Checkbox, Collapse, Divider, FormControl, Icon, IconButton, ImageList, ImageListItem, Input,
   InputBase, InputLabel, List, ListItem, ListItemAvatar, ListItemButton, ListItemIcon, ListItemText, ListSubheader, Menu, MenuItem, Select, Stack, styled, Switch, TextField, Toolbar, Typography
@@ -378,7 +379,7 @@ const Navbar = () => {
                         </Box>
 
                         : (chapli === false) ? eachItem?.name : null}
-                    subheader="September 14, 2016" />
+                    subheader={moment(new Date).format('MMM Do YY')} />
                   <Box
                     height={300}
 
