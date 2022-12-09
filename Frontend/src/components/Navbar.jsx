@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { EmojiEmotions, ExpandMore, Group, Home, Image, Share, Mail, Margin, Message, Notifications, PersonAdd, Place, PlayArrow, PlayCircle, Storefront, VideoCameraBack, YouTube, Favorite, MoreVert, Drafts, Send, Inbox, StarBorder, ExpandLess, LiveTv, SportsEsports, CheckBox, FavoriteBorder, ToggleOffOutlined, Mode, ModeNight } from '@mui/icons-material'
 import { Box } from '@mui/system'
 import axios from 'axios';
@@ -115,7 +115,13 @@ const Navbar = () => {
       .catch(err => {
         console.log("err", err);
       })
-  }
+  };
+
+  useEffect(() => {
+    getAllPost();
+
+  }, [])
+
   const updation = (e) => {
     e.preventDefault();
     setchapli(false)
@@ -171,13 +177,13 @@ const Navbar = () => {
           <UserBox>
             <Avatar sx={{ width: 30, height: 30 }}
               src="https://scontent.fkhi22-1.fna.fbcdn.net/v/t1.6435-9/188384323_1447601038927019_7887706600818859341_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeGCL_hYTwG3k08kQD1LvB8Nsc5T_WLrH_GxzlP9Yusf8UL9sMeXCGVl0UPyrwu9aI_Jxl1QzZohUXqIXpF8s3en&_nc_ohc=7FRlBip4joUAX-tigpc&_nc_ht=scontent.fkhi22-1.fna&oh=00_AfAwof37GJPcifAUMMjWyR4bvCvOynHtJ3UWO1Z1k0j0Pw&oe=63B01325" />
-        <Typography variant='span'>Muhammad</Typography>
+            <Typography variant='span'>Muhammad</Typography>
           </UserBox>
 
         </StyledToolbar>
       </AppBar>
 
-        {/* Sidebar */}
+      {/* Sidebar */}
       <Stack direction="row" spacing={2}>
         <Box flex={1.5} p={2} sx={{ display: { xs: "none", sm: "none", md: "block" } }}>
 
